@@ -1,0 +1,12 @@
+.main-content {
+  min-height: calc(100vh - 64px - 200px); // viewport height minus navbar and footer
+  display: flex;
+  flex-direction: column;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+

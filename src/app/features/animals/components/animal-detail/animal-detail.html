@@ -1,0 +1,84 @@
+<div class="animal-detail-container">
+  <div class="header">
+    <button mat-icon-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Animal Details</h1>
+  </div>
+
+  @if (loading) {
+    <mat-card>
+      <mat-card-content>
+        <p>Loading...</p>
+      </mat-card-content>
+    </mat-card>
+  } @else if (animal) {
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>pets</mat-icon>
+          {{ animal.name }}
+        </mat-card-title>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="detail-row">
+          <span class="label">ID:</span>
+          <span class="value">{{ animal.id }}</span>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <div class="detail-row">
+          <span class="label">Name:</span>
+          <span class="value">{{ animal.name }}</span>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <div class="detail-row">
+          <span class="label">Breed:</span>
+          <span class="value">{{ animal.breed }}</span>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <div class="detail-row">
+          <span class="label">Species:</span>
+          <span class="value">{{ animal.species }}</span>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <div class="detail-row">
+          <span class="label">Environment:</span>
+          <span class="value">{{ animal.environment }}</span>
+        </div>
+        
+        @if (animal.photo) {
+          <mat-divider></mat-divider>
+          <div class="detail-row">
+            <span class="label">Photo:</span>
+            <span class="value">{{ animal.photo }}</span>
+          </div>
+        }
+      </mat-card-content>
+      
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="editAnimal()">
+          <mat-icon>edit</mat-icon>
+          Edit Animal
+        </button>
+        <button mat-button (click)="goBack()">
+          Cancel
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  } @else {
+    <mat-card>
+      <mat-card-content>
+        <p>Animal not found.</p>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

@@ -1,0 +1,53 @@
+<mat-toolbar color="primary" class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-brand">
+      <a routerLink="/" class="brand-link">
+        <mat-icon>pets</mat-icon>
+        <span>Pet Haven Portal</span>
+      </a>
+    </div>
+
+    <nav class="navbar-menu">
+      <a mat-button routerLink="/animals" routerLinkActive="active">
+        <mat-icon>pets</mat-icon>
+        Animals
+      </a>
+      <a mat-button routerLink="/shelters" routerLinkActive="active">
+        <mat-icon>home</mat-icon>
+        Shelters
+      </a>
+      <a mat-button routerLink="/users" routerLinkActive="active">
+        <mat-icon>people</mat-icon>
+        Users
+      </a>
+    </nav>
+
+    <div class="navbar-actions">
+      @if (authService.isAuthenticated()) {
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      } @else {
+        <a mat-button routerLink="/auth/login">
+          <mat-icon>login</mat-icon>
+          Login
+        </a>
+      }
+    </div>
+  </div>
+</mat-toolbar>

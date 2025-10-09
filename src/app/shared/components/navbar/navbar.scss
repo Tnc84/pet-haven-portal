@@ -1,0 +1,64 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.navbar-brand {
+  .brand-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 500;
+
+    mat-icon {
+      font-size: 28px;
+      height: 28px;
+      width: 28px;
+    }
+  }
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
+
+  a {
+    color: white;
+    
+    &.active {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    mat-icon {
+      margin-right: 4px;
+    }
+  }
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  button, a {
+    color: white;
+  }
+}
+

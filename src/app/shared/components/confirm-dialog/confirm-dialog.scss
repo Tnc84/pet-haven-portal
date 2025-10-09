@@ -1,0 +1,26 @@
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+
+  mat-icon {
+    color: #f44336;
+  }
+}
+
+mat-dialog-content {
+  padding: 20px 0;
+  min-width: 350px;
+
+  p {
+    margin: 0;
+    font-size: 16px;
+  }
+}
+
+mat-dialog-actions {
+  padding: 8px 0;
+  margin: 0;
+}
+

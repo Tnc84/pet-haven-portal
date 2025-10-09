@@ -1,0 +1,57 @@
+<div class="shelter-list-container">
+  <div class="header">
+    <h1>Shelters</h1>
+    <button mat-raised-button color="primary" (click)="createShelter()">
+      <mat-icon>add</mat-icon>
+      Add Shelter
+    </button>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <table mat-table [dataSource]="shelters" class="mat-elevation-z2">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let shelter">{{shelter.id}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let shelter">{{shelter.name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="city">
+          <th mat-header-cell *matHeaderCellDef>City</th>
+          <td mat-cell *matCellDef="let shelter">{{shelter.city}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="environment">
+          <th mat-header-cell *matHeaderCellDef>Environment</th>
+          <td mat-cell *matCellDef="let shelter">{{shelter.environment}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let shelter">
+            <button mat-icon-button color="primary" (click)="viewShelter(shelter.id)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" (click)="editShelter(shelter.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      @if (shelters.length === 0) {
+        <div class="no-data">
+          <mat-icon>home</mat-icon>
+          <p>No shelters found.</p>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
