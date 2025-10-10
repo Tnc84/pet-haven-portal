@@ -12,34 +12,72 @@
 
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Error Message Display -->
+        @if (errorMessage) {
+          <div class="error-message">
+            <mat-icon>error</mat-icon>
+            <span>{{ errorMessage }}</span>
+          </div>
+        }
+
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" placeholder="your@email.com" required>
+          <input 
+            matInput 
+            formControlName="email" 
+            type="email" 
+            placeholder="your@email.com" 
+            [disabled]="isLoading"
+            required>
           <mat-icon matPrefix>email</mat-icon>
           @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-            <mat-error>Please enter a valid email</mat-error>
+            <mat-error>{{ getErrorMessage('email') }}</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Password</mat-label>
-          <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required>
+          <input 
+            matInput 
+            formControlName="password" 
+            [type]="hidePassword ? 'password' : 'text'" 
+            [disabled]="isLoading"
+            required>
           <mat-icon matPrefix>lock</mat-icon>
-          <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+          <button 
+            mat-icon-button 
+            matSuffix 
+            type="button" 
+            (click)="togglePasswordVisibility()"
+            [disabled]="isLoading">
             <mat-icon>{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
           </button>
           @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-            <mat-error>Password is required</mat-error>
+            <mat-error>{{ getErrorMessage('password') }}</mat-error>
           }
         </mat-form-field>
 
-        <button mat-raised-button color="primary" type="submit" class="full-width login-button">
-          <mat-icon>login</mat-icon>
-          Sign In
+        <button 
+          mat-raised-button 
+          color="primary" 
+          type="submit" 
+          class="full-width login-button"
+          [disabled]="loginForm.invalid || isLoading">
+          @if (isLoading) {
+            <mat-spinner diameter="20"></mat-spinner>
+            <span>Signing In...</span>
+          } @else {
+            <ng-container>
+              <mat-icon>login</mat-icon>
+              <span>Sign In</span>
+            </ng-container>
+          }
         </button>
 
         <div class="links">
-          <a routerLink="/auth/register">Don't have an account? Register</a>
+          <a routerLink="/auth/register" [class.disabled]="isLoading">
+            Don't have an account? Register
+          </a>
         </div>
       </form>
     </mat-card-content>

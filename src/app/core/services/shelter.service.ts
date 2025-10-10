@@ -13,24 +13,47 @@ export class ShelterService {
 
   constructor(private apiService: ApiService) {}
 
-  // GET /shelters/getAll
+  /**
+   * GET /shelters/getAll
+   * @returns Observable<Shelter[]> - All shelters (requires authentication)
+   */
   getAllShelters(): Observable<Shelter[]> {
-    return this.apiService.get<Shelter[]>(`${this.endpoint}/getAll`);
+    return this.apiService.getAuthenticated<Shelter[]>(`${this.endpoint}/getAll`);
   }
 
-  // GET /shelters/getAllAnimals (via Feign - gets animals from animal microservice)
+  /**
+   * GET /shelters/getAllAnimals (via Feign - gets animals from animal microservice)
+   * @returns Observable<Animal[]> - All animals via shelter service (requires authentication)
+   */
   getAllAnimalsViaFeign(): Observable<Animal[]> {
-    return this.apiService.get<Animal[]>(`${this.endpoint}/getAllAnimals`);
+    return this.apiService.getAuthenticated<Animal[]>(`${this.endpoint}/getAllAnimals`);
   }
 
-  // POST /shelters/add
+  /**
+   * POST /shelters/add
+   * @param shelter Shelter data (without ID)
+   * @returns Observable<Shelter> - Created shelter (requires authentication)
+   */
   createShelter(shelter: ShelterCreateRequest): Observable<Shelter> {
-    return this.apiService.post<Shelter>(`${this.endpoint}/add`, shelter);
+    return this.apiService.postAuthenticated<Shelter>(`${this.endpoint}/add`, shelter);
   }
 
-  // PUT /shelters/update
+  /**
+   * PUT /shelters/update
+   * @param shelter Shelter data (with ID)
+   * @returns Observable<Shelter> - Updated shelter (requires authentication)
+   */
   updateShelter(shelter: ShelterUpdateRequest): Observable<Shelter> {
-    return this.apiService.put<Shelter>(`${this.endpoint}/update`, shelter);
+    return this.apiService.putAuthenticated<Shelter>(`${this.endpoint}/update`, shelter);
+  }
+
+  /**
+   * DELETE /shelters/{id}
+   * @param id Shelter ID
+   * @returns Observable<any> - Deletion result (requires authentication)
+   */
+  deleteShelter(id: number): Observable<any> {
+    return this.apiService.deleteAuthenticated<any>(`${this.endpoint}/${id}`);
   }
 }
 

@@ -4,7 +4,15 @@ export const environment = {
   endpoints: {
     animals: '/animal-microservice/animals',
     shelters: '/shelter-microservice/shelters',
-    users: '/user-microservice/users'
+    users: '/user-microservice/users',
+    userManagement: '/user-management'
+  },
+  // Authentication endpoints
+  auth: {
+    login: '/user-management/auth/login',
+    register: '/user-management/auth/register',
+    refresh: '/user-management/auth/refresh',
+    logout: '/user-management/auth/logout'
   }
 };
 

@@ -5,7 +5,7 @@ import { roleGuard } from './core/guards/role.guard';
 export const routes: Routes = [
   { path: '', redirectTo: '/animals', pathMatch: 'full' },
   {
-    path: 'auth/login',
+    path: 'login',
     loadComponent: () => import('./features/auth/components/login/login').then(m => m.Login)
   },
   {
@@ -13,7 +13,16 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/components/register/register').then(m => m.Register)
   },
   {
+    path: 'unauthorized',
+    loadComponent: () => import('./features/error/unauthorized/unauthorized').then(m => m.UnauthorizedComponent)
+  },
+  {
+    path: 'not-found',
+    loadComponent: () => import('./features/error/not-found/not-found').then(m => m.NotFoundComponent)
+  },
+  {
     path: 'animals',
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -32,10 +41,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/animals/components/animal-detail/animal-detail').then(m => m.AnimalDetail)
       }
     ]
-    // canActivate: [authGuard]  // Uncomment when authentication is implemented
   },
   {
     path: 'shelters',
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -50,10 +59,11 @@ export const routes: Routes = [
         loadComponent: () => import('./features/shelters/components/shelter-form/shelter-form').then(m => m.ShelterForm)
       }
     ]
-    // canActivate: [authGuard]  // Uncomment when authentication is implemented
   },
   {
     path: 'users',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN', 'MANAGER', 'OWNER'] },
     children: [
       {
         path: '',
@@ -68,8 +78,6 @@ export const routes: Routes = [
         loadComponent: () => import('./features/users/components/user-form/user-form').then(m => m.UserForm)
       }
     ]
-    // canActivate: [authGuard, roleGuard],  // Uncomment when authentication is implemented
-    // data: { roles: ['ADMIN', 'MANAGER', 'OWNER'] }
   },
   { path: '**', redirectTo: '/animals' }
 ];

@@ -12,24 +12,48 @@ export class AnimalService {
 
   constructor(private apiService: ApiService) {}
 
-  // GET /animals/getAll
+  /**
+   * GET /animals/getAll
+   * @returns Observable<Animal[]> - All animals (requires authentication)
+   */
   getAllAnimals(): Observable<Animal[]> {
-    return this.apiService.get<Animal[]>(`${this.endpoint}/getAll`);
+    return this.apiService.getAuthenticated<Animal[]>(`${this.endpoint}/getAll`);
   }
 
-  // GET /animals/getById/{id}
+  /**
+   * GET /animals/getById/{id}
+   * @param id Animal ID
+   * @returns Observable<Animal> - Animal details (requires authentication)
+   */
   getAnimalById(id: number): Observable<Animal> {
-    return this.apiService.get<Animal>(`${this.endpoint}/getById/${id}`);
+    return this.apiService.getAuthenticated<Animal>(`${this.endpoint}/getById/${id}`);
   }
 
-  // POST /animals
+  /**
+   * POST /animals
+   * @param animal Animal data (without ID)
+   * @returns Observable<Animal> - Created animal (requires authentication)
+   */
   createAnimal(animal: AnimalCreateRequest): Observable<Animal> {
-    return this.apiService.post<Animal>(this.endpoint, animal);
+    return this.apiService.postAuthenticated<Animal>(this.endpoint, animal);
   }
 
-  // PUT /animals
+  /**
+   * PUT /animals
+   * @param animal Animal data (with ID)
+   * @returns Observable<Animal> - Updated animal (requires authentication)
+   */
   updateAnimal(animal: AnimalUpdateRequest): Observable<Animal> {
-    return this.apiService.put<Animal>(this.endpoint, animal);
+    return this.apiService.putAuthenticated<Animal>(this.endpoint, animal);
+  }
+
+  /**
+   * DELETE /animals/{id}
+   * @param id Animal ID
+   * @returns Observable<any> - Deletion result (requires authentication)
+   */
+  deleteAnimal(id: number): Observable<any> {
+    return this.apiService.deleteAuthenticated<any>(`${this.endpoint}/${id}`);
   }
 }
 

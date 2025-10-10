@@ -1,17 +1,19 @@
 # Pet Haven Portal - Angular Frontend
 
-A modern, scalable Angular application for managing animal shelters, built with Angular 20, Material Design, and reactive programming principles.
+A modern, scalable Angular application for managing animal shelters, built with Angular 20, Material Design, and enterprise-grade security features.
 
 ## 🚀 Features
 
-- **Animal Management**: Create, read, update animals with detailed information
+- **Animal Management**: Create, read, update, and delete animals with detailed information
 - **Shelter Management**: Manage shelter locations and environments
-- **User Management**: Complete user administration with role-based access
-- **Authentication**: Ready for JWT-based authentication (backend integration pending)
-- **Responsive Design**: Mobile-first approach with Angular Material
-- **Modern Architecture**: Standalone components, lazy loading, and route guards
-- **State Management**: Reactive programming with RxJS
-- **Error Handling**: Global error interceptor with user-friendly notifications
+- **User Management**: Complete user administration with role-based access control
+- **🔐 Enterprise Security**: JWT authentication with automatic token refresh
+- **🛡️ Role-Based Access**: USER, ADMIN, MANAGER, OWNER permission levels
+- **📱 Responsive Design**: Mobile-first approach with Angular Material
+- **🏗️ Modern Architecture**: Standalone components, lazy loading, and route guards
+- **⚡ State Management**: Reactive programming with RxJS
+- **⚠️ Error Handling**: Comprehensive error management with user-friendly notifications
+- **🔄 Auto Token Refresh**: Seamless user experience with background token renewal
 
 ## 📋 Prerequisites
 
@@ -34,18 +36,34 @@ A modern, scalable Angular application for managing animal shelters, built with 
 
 3. **Configure environment**
    
-   Update `src/environments/environment.ts` with your API Gateway URL:
+   The environment is already configured for the microservices architecture:
    ```typescript
    export const environment = {
      production: false,
-     apiUrl: 'http://localhost:8765',  // Your API Gateway URL
+     apiUrl: 'http://localhost:8765',  // API Gateway URL
      endpoints: {
        animals: '/animal-microservice/animals',
        shelters: '/shelter-microservice/shelters',
-       users: '/user-microservice/users'
+       users: '/user-microservice/users',
+       userManagement: '/user-management'
+     },
+     auth: {
+       login: '/user-management/auth/login',
+       register: '/user-management/auth/register',
+       refresh: '/user-management/auth/refresh',
+       logout: '/user-management/auth/logout'
      }
    };
    ```
+
+4. **Start Backend Services**
+   
+   Ensure your Java Spring Boot microservices are running:
+   - API Gateway (port 8765)
+   - User Management Service
+   - Animal Microservice
+   - Shelter Microservice
+   - User Microservice
 
 ## 🚀 Development
 
@@ -56,6 +74,23 @@ npm start
 ```
 
 Navigate to `http://localhost:4200/`. The application will automatically reload when you make changes.
+
+### 🔐 Authentication Flow
+
+1. **Access the application** - You'll be redirected to `/login` if not authenticated
+2. **Register a new account** - Navigate to `/auth/register` to create an account
+3. **Login** - Use your credentials to access the application
+4. **Automatic token refresh** - Tokens are automatically renewed in the background
+5. **Role-based access** - Different features based on your user role
+
+### 🛡️ Security Features
+
+- **JWT Authentication**: Secure token-based authentication
+- **HttpOnly Cookies**: Refresh tokens stored securely
+- **Automatic Token Refresh**: Seamless user experience
+- **Route Protection**: Guards for authenticated routes
+- **Role-Based Access**: Fine-grained permission control
+- **Error Handling**: Comprehensive error management
 
 ## 🏗️ Build
 
@@ -72,18 +107,19 @@ The build artifacts will be stored in the `dist/` directory.
 ```
 src/app/
 ├── core/                          # Singleton services, guards, interceptors
-│   ├── services/                  # API, Animal, Shelter, User, Auth, Loading
-│   ├── guards/                    # Auth and Role guards
-│   ├── interceptors/              # HTTP interceptors
+│   ├── services/                  # API, Animal, Shelter, User, Auth, Loading, ErrorHandler
+│   ├── guards/                    # Auth and Role guards (reactive)
+│   ├── interceptors/              # HTTP interceptors (Auth, Error, Loading)
 │   └── models/                    # TypeScript interfaces
-├── features/                      # Feature modules (lazy-loaded)
-│   ├── animals/                   # Animal management
-│   ├── shelters/                  # Shelter management
-│   ├── users/                     # User management
-│   └── auth/                      # Authentication
+├── features/                     # Feature modules (lazy-loaded)
+│   ├── animals/                   # Animal management (authenticated)
+│   ├── shelters/                  # Shelter management (authenticated)
+│   ├── users/                     # User management (role-based)
+│   ├── auth/                      # Authentication (login/register)
+│   └── error/                     # Error pages (unauthorized, not-found)
 ├── shared/                        # Shared components
 │   └── components/                # Navbar, Footer, Loading, Dialog
-└── app.routes.ts                  # Application routing
+└── app.routes.ts                  # Application routing with guards
 ```
 
 ## 🎯 Key Technologies
@@ -141,14 +177,30 @@ The application connects to microservices through an API Gateway (default: `http
 - `PUT /user-microservice/users/update`
 - `DELETE /user-microservice/users/delete/{id}`
 
-## 🔐 Authentication
+## 🔐 Authentication & Security
 
-Authentication is currently prepared but not active. To enable:
+The application features **enterprise-grade security** with complete JWT authentication:
 
-1. Uncomment route guards in `app.routes.ts`
-2. Implement login logic in `AuthService`
-3. Update backend to provide JWT tokens
-4. Configure CORS on backend for Angular app
+### 🔑 Authentication Features
+- **JWT Tokens**: Access tokens (15 min) + HttpOnly refresh tokens (7 days)
+- **Automatic Token Refresh**: Seamless background token renewal
+- **Route Protection**: All routes protected with authentication guards
+- **Role-Based Access**: USER, ADMIN, MANAGER, OWNER permission levels
+- **Secure Storage**: Tokens stored securely with XSS protection
+- **Error Handling**: Comprehensive authentication error management
+
+### 🛡️ Security Implementation
+- **AuthService**: Complete JWT authentication with automatic refresh
+- **HTTP Interceptor**: Automatic token injection and refresh handling
+- **Route Guards**: Authentication and role-based access control
+- **Error Handler**: Centralized error management for security scenarios
+- **Form Validation**: Client-side validation with security best practices
+
+### 🔒 User Roles
+- **USER**: Basic access to animals and shelters
+- **ADMIN**: Full system access including user management
+- **MANAGER**: Management access to animals and shelters
+- **OWNER**: Complete system ownership and administration
 
 ## 🧪 Testing
 
@@ -203,20 +255,39 @@ Run container:
 docker run -p 80:80 pet-haven-frontend
 ```
 
-## 🐛 Known Issues
+## 🎯 Quick Start Guide
 
-- Authentication endpoints not yet implemented in backend
-- JWT token handling prepared but not active
-- File upload for animal photos to be implemented
+### 1. **Start Backend Services**
+```bash
+# Ensure your Java Spring Boot microservices are running
+# - API Gateway (port 8765)
+# - User Management Service
+# - Animal, Shelter, User Microservices
+```
+
+### 2. **Start Frontend**
+```bash
+npm start
+# Navigate to http://localhost:4200
+```
+
+### 3. **Test Authentication**
+1. **Register**: Go to `/auth/register` to create an account
+2. **Login**: Use your credentials at `/login`
+3. **Explore**: Access protected routes like `/animals`, `/shelters`
+4. **Test Roles**: Try accessing `/users` (requires ADMIN/MANAGER/OWNER role)
 
 ## 🔮 Future Enhancements
 
-- [ ] Implement full authentication flow
-- [ ] Add pagination and filtering
-- [ ] Implement file upload for animal photos
-- [ ] Add real-time updates with WebSockets
-- [ ] Implement NgRx for complex state management
-- [ ] Add PWA capabilities
+- [ ] Multi-factor authentication (MFA)
+- [ ] Password reset functionality
+- [ ] User profile management
+- [ ] Advanced role management
+- [ ] Audit logging
+- [ ] File upload for animal photos
+- [ ] Real-time updates with WebSockets
+- [ ] NgRx for complex state management
+- [ ] PWA capabilities
 - [ ] Internationalization (i18n)
 - [ ] Advanced search and filtering
 - [ ] Export/Import functionality
@@ -230,13 +301,28 @@ This project is part of the Pet Haven Portal microservices application.
 
 Frontend Team - Pet Haven Portal
 
+## 📚 Documentation
+
+- **Security Implementation**: `SECURITY_IMPLEMENTATION_SUMMARY.md` - Complete security documentation
+- **Frontend Guide**: `angular-frontend-implementation-guide.md` - Detailed implementation guide
+- **API Integration**: `FRONTEND_SWAGGER_INTEGRATION_GUIDE.md` - Backend integration guide
+
 ## 📞 Support
 
 For issues and questions:
 - Create an issue in the repository
 - Contact the development team
-- Refer to the implementation guide: `angular-frontend-implementation-guide.md`
+- Refer to the comprehensive documentation above
+
+## 🏆 Security Status
+
+✅ **Production Ready**: Enterprise-grade security implemented  
+✅ **JWT Authentication**: Complete with automatic token refresh  
+✅ **Role-Based Access**: Fine-grained permission control  
+✅ **Route Protection**: All routes properly secured  
+✅ **Error Handling**: Comprehensive error management  
+✅ **Form Validation**: Security best practices implemented  
 
 ---
 
-**Built with ❤️ using Angular 20**
+**🔐 Built with ❤️ using Angular 20 + Enterprise Security**
