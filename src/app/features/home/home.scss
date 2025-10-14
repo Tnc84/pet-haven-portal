@@ -93,20 +93,25 @@
 
 .orb-glow {
   position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -20px;
-  bottom: -20px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
-  opacity: 0;
-  animation: orbPulse 2s ease-in-out infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 8rem;
+  opacity: 0.3;
+  animation: heartPulse 2s ease-in-out infinite;
   z-index: -1;
+  pointer-events: none;
 }
 
-@keyframes orbPulse {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.1); }
+@keyframes heartPulse {
+  0%, 100% { 
+    opacity: 0.3; 
+    transform: translate(-50%, -50%) scale(1); 
+  }
+  50% { 
+    opacity: 0.6; 
+    transform: translate(-50%, -50%) scale(1.2); 
+  }
 }
 
 .orb-content {
@@ -115,15 +120,37 @@
   z-index: 2;
 }
 
-.orb-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-  animation: iconFloat 3s ease-in-out infinite;
+.animal-icons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+  max-width: 200px;
 }
 
-@keyframes iconFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+.animal-icon {
+  font-size: 2.5rem;
+  animation: animalBounce 2s ease-in-out infinite;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.animal-icon:hover {
+  transform: scale(1.2);
+}
+
+.animal-icon:nth-child(1) { animation-delay: 0s; }
+.animal-icon:nth-child(2) { animation-delay: 0.2s; }
+.animal-icon:nth-child(3) { animation-delay: 0.4s; }
+.animal-icon:nth-child(4) { animation-delay: 0.6s; }
+.animal-icon:nth-child(5) { animation-delay: 0.8s; }
+.animal-icon:nth-child(6) { animation-delay: 1s; }
+.animal-icon:nth-child(7) { animation-delay: 1.2s; }
+.animal-icon:nth-child(8) { animation-delay: 1.4s; }
+
+@keyframes animalBounce {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-8px) scale(1.1); }
 }
 
 .orb-title {
@@ -136,69 +163,6 @@
   background-clip: text;
 }
 
-.orb-subtitle {
-  font-size: 1.1rem;
-  opacity: 0.8;
-  color: #a0a0a0;
-  margin: 0;
-}
-
-.orb-particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-}
-
-.particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: #00d4ff;
-  border-radius: 50%;
-  animation: particleFloat 4s linear infinite;
-}
-
-.particle:nth-child(1) {
-  top: 20%;
-  left: 20%;
-  animation-delay: 0s;
-}
-
-.particle:nth-child(2) {
-  top: 30%;
-  right: 20%;
-  animation-delay: 1s;
-}
-
-.particle:nth-child(3) {
-  bottom: 30%;
-  left: 30%;
-  animation-delay: 2s;
-}
-
-.particle:nth-child(4) {
-  bottom: 20%;
-  right: 30%;
-  animation-delay: 3s;
-}
-
-@keyframes particleFloat {
-  0% {
-    opacity: 0;
-    transform: translateY(0px) scale(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-20px) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-40px) scale(0);
-  }
-}
 
 // Responsive design
 @media (max-width: 768px) {
@@ -219,7 +183,13 @@
     font-size: 2rem;
   }
   
-  .orb-icon {
-    font-size: 3rem;
+  .animal-icons {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
+    max-width: 180px;
+  }
+  
+  .animal-icon {
+    font-size: 2rem;
   }
 }
