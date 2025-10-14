@@ -3,54 +3,43 @@
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%) !important;
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.05) 0%, transparent 50%);
+    animation: backgroundShift 20s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes backgroundShift {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
 }
 
 .navbar-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 16px;
+  position: relative;
+  z-index: 2;
 }
 
-.navbar-brand {
-  .brand-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: white;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 500;
-
-    mat-icon {
-      font-size: 28px;
-      height: 28px;
-      width: 28px;
-    }
-  }
-}
-
-.navbar-menu {
-  display: flex;
-  gap: 8px;
-  flex: 1;
-  justify-content: center;
-
-  a {
-    color: white;
-    
-    &.active {
-      background-color: rgba(255, 255, 255, 0.15);
-    }
-
-    mat-icon {
-      margin-right: 4px;
-    }
-  }
-}
 
 .navbar-actions {
   display: flex;
@@ -59,6 +48,32 @@
 
   button, a {
     color: white;
+  }
+
+  .login-button {
+    background: linear-gradient(45deg, #00d4ff, #0099cc);
+    color: white;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: linear-gradient(45deg, #0099cc, #0077aa);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 212, 255, 0.3);
+    }
+  }
+
+  .register-button {
+    background: linear-gradient(45deg, #ff00ff, #cc00cc);
+    color: white;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: linear-gradient(45deg, #cc00cc, #aa00aa);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(255, 0, 255, 0.3);
+    }
   }
 }
 

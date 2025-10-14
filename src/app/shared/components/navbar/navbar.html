@@ -1,26 +1,5 @@
 <mat-toolbar color="primary" class="navbar">
   <div class="navbar-container">
-    <div class="navbar-brand">
-      <a routerLink="/" class="brand-link">
-        <mat-icon>pets</mat-icon>
-        <span>Pet Haven Portal</span>
-      </a>
-    </div>
-
-    <nav class="navbar-menu">
-      <a mat-button routerLink="/animals" routerLinkActive="active">
-        <mat-icon>pets</mat-icon>
-        Animals
-      </a>
-      <a mat-button routerLink="/shelters" routerLinkActive="active">
-        <mat-icon>home</mat-icon>
-        Shelters
-      </a>
-      <a mat-button routerLink="/users" routerLinkActive="active">
-        <mat-icon>people</mat-icon>
-        Users
-      </a>
-    </nav>
 
     <div class="navbar-actions">
       @if (authService.isAuthenticated()) {
@@ -43,9 +22,13 @@
           </button>
         </mat-menu>
       } @else {
-        <a mat-button routerLink="/auth/login">
+        <a mat-button routerLink="/login" class="login-button">
           <mat-icon>login</mat-icon>
           Login
+        </a>
+        <a mat-button routerLink="/auth/register" class="register-button">
+          <mat-icon>person_add</mat-icon>
+          Sign Up
         </a>
       }
     </div>
