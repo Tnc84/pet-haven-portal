@@ -1,0 +1,370 @@
+.happy-tails-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+  padding: 2rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.happy-tails-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+  animation: backgroundFloat 15s ease-in-out infinite;
+}
+
+@keyframes backgroundFloat {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.header-glow {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: headerPulse 3s ease-in-out infinite;
+}
+
+@keyframes headerPulse {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.3; }
+  50% { transform: translateX(-50%) scale(1.2); opacity: 0.6; }
+}
+
+.main-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: titleGradient 4s ease-in-out infinite;
+  text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+}
+
+@keyframes titleGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: #a0a0a0;
+  font-weight: 300;
+  margin: 0;
+}
+
+.animals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.animal-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.animal-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2),
+              0 0 60px rgba(255, 0, 255, 0.1);
+}
+
+.card-glow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
+  border-radius: 22px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+
+.animal-card:hover .card-glow {
+  opacity: 0.3;
+}
+
+.animal-image {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.animal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.animal-card:hover .animal-img {
+  transform: scale(1.1);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.animal-type-icon {
+  font-size: 1.5rem;
+}
+
+.animal-info {
+  padding: 1.5rem;
+  color: white;
+}
+
+.animal-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #00d4ff;
+}
+
+.animal-type {
+  font-size: 1.1rem;
+  color: #ff00ff;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.animal-breed {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  margin-bottom: 1rem;
+}
+
+.animal-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}
+
+.stat-icon {
+  font-size: 0.8rem;
+}
+
+.animal-description {
+  font-size: 0.9rem;
+  color: #c0c0c0;
+  line-height: 1.4;
+}
+
+.card-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #00d4ff;
+  border-radius: 50%;
+  animation: particleFloat 6s linear infinite;
+}
+
+.particle:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+  top: 60%;
+  right: 10%;
+  animation-delay: 2s;
+}
+
+.particle:nth-child(3) {
+  bottom: 30%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+@keyframes particleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0px) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-30px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) scale(0);
+  }
+}
+
+.loading-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: white;
+}
+
+.loading-orb {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 2rem;
+}
+
+.orb-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid transparent;
+  border-top: 2px solid #00d4ff;
+  border-radius: 50%;
+  animation: orbRotate 1.5s linear infinite;
+}
+
+.orb-ring:nth-child(2) {
+  animation-delay: 0.3s;
+  border-top-color: #ff00ff;
+}
+
+.orb-ring:nth-child(3) {
+  animation-delay: 0.6s;
+  border-top-color: #00ff88;
+}
+
+@keyframes orbRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 1.2rem;
+  color: #a0a0a0;
+}
+
+.error-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: white;
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.error-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #ff6b6b;
+}
+
+.error-message {
+  color: #a0a0a0;
+  margin-bottom: 2rem;
+}
+
+.retry-button {
+  background: linear-gradient(45deg, #00d4ff, #ff00ff);
+  border: none;
+  border-radius: 25px;
+  padding: 0.8rem 2rem;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+}
+
+.button-icon {
+  font-size: 1rem;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .happy-tails-container {
+    padding: 1rem;
+  }
+  
+  .main-title {
+    font-size: 2.5rem;
+  }
+  
+  .animals-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .animal-image {
+    height: 200px;
+  }
+}

@@ -3,7 +3,10 @@ import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/animals', pathMatch: 'full' },
+  { 
+    path: '', 
+    loadComponent: () => import('./features/home/home').then(m => m.Home)
+  },
   {
     path: 'login',
     loadComponent: () => import('./features/auth/components/login/login').then(m => m.Login)
@@ -59,6 +62,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/shelters/components/shelter-form/shelter-form').then(m => m.ShelterForm)
       }
     ]
+  },
+  {
+    path: 'happy-tails',
+    loadComponent: () => import('./features/happy-tails/happy-tails').then(m => m.HappyTails)
   },
   {
     path: 'users',

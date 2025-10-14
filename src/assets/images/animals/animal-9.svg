@@ -1,0 +1,27 @@
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg9" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B0E0E6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#bg9)"/>
+  
+  <!-- Canary -->
+  <ellipse cx="150" cy="100" rx="20" ry="15" fill="#FFD700"/>
+  <circle cx="150" cy="95" r="6" fill="#FFD700"/>
+  <circle cx="148" cy="93" r="1" fill="#000"/>
+  <circle cx="152" cy="93" r="1" fill="#000"/>
+  <ellipse cx="150" cy="96" rx="2" ry="1" fill="#000"/>
+  <path d="M 130 100 Q 120 90 130 80" stroke="#FFD700" stroke-width="3" fill="none"/>
+  <path d="M 170 100 Q 180 90 170 80" stroke="#FFD700" stroke-width="3" fill="none"/>
+  
+  <!-- Hearts -->
+  <path d="M 50 50 Q 45 40 40 50 Q 35 40 30 50 Q 35 60 40 70 Q 45 60 50 50" fill="#FF69B4"/>
+  <path d="M 250 50 Q 245 40 240 50 Q 235 40 230 50 Q 235 60 240 70 Q 245 60 250 50" fill="#FF69B4"/>
+  
+  <!-- Text -->
+  <text x="150" y="180" text-anchor="middle" fill="#8B4513" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Yellow Canary</text>
+</svg>

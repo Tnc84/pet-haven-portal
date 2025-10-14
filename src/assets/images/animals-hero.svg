@@ -1,0 +1,46 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#bg)"/>
+  
+  <!-- Dog -->
+  <circle cx="100" cy="150" r="30" fill="#FFB6C1"/>
+  <circle cx="100" cy="140" r="15" fill="#FFB6C1"/>
+  <circle cx="95" cy="135" r="3" fill="#000"/>
+  <circle cx="105" cy="135" r="3" fill="#000"/>
+  <ellipse cx="100" cy="145" rx="8" ry="4" fill="#000"/>
+  <ellipse cx="85" cy="150" rx="15" ry="8" fill="#FFB6C1"/>
+  <ellipse cx="115" cy="150" rx="15" ry="8" fill="#FFB6C1"/>
+  
+  <!-- Cat -->
+  <circle cx="200" cy="150" r="25" fill="#FFA07A"/>
+  <circle cx="200" cy="145" r="12" fill="#FFA07A"/>
+  <circle cx="197" cy="142" r="2" fill="#000"/>
+  <circle cx="203" cy="142" r="2" fill="#000"/>
+  <ellipse cx="200" cy="148" rx="6" ry="3" fill="#000"/>
+  <path d="M 190 140 L 185 130 L 195 135 Z" fill="#FFA07A"/>
+  <path d="M 210 140 L 215 130 L 205 135 Z" fill="#FFA07A"/>
+  
+  <!-- Bird -->
+  <ellipse cx="300" cy="150" rx="20" ry="15" fill="#87CEEB"/>
+  <circle cx="300" cy="145" r="8" fill="#87CEEB"/>
+  <circle cx="298" cy="143" r="1.5" fill="#000"/>
+  <circle cx="302" cy="143" r="1.5" fill="#000"/>
+  <ellipse cx="300" cy="147" rx="4" ry="2" fill="#FF6347"/>
+  <path d="M 280 150 Q 270 140 280 130" stroke="#87CEEB" stroke-width="3" fill="none"/>
+  <path d="M 320 150 Q 330 140 320 130" stroke="#87CEEB" stroke-width="3" fill="none"/>
+  
+  <!-- Hearts -->
+  <path d="M 50 80 Q 45 70 40 80 Q 35 70 30 80 Q 35 90 40 100 Q 45 90 50 80" fill="#FF69B4"/>
+  <path d="M 350 80 Q 345 70 340 80 Q 335 70 330 80 Q 335 90 340 100 Q 345 90 350 80" fill="#FF69B4"/>
+  <path d="M 200 50 Q 195 40 190 50 Q 185 40 180 50 Q 185 60 190 70 Q 195 60 200 50" fill="#FF69B4"/>
+  
+  <!-- Text -->
+  <text x="200" y="250" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">🐾 Our Beloved Animals 🐾</text>
+</svg>

@@ -1,0 +1,56 @@
+<div class="happy-tails-container">
+  <div class="header-section">
+    <div class="header-glow"></div>
+    <h1 class="main-title">✨ Happy Tails Sanctuary ✨</h1>
+    <p class="subtitle">Where every animal finds their perfect home</p>
+  </div>
+
+  <div class="content-section" *ngIf="!loading && !error">
+    <div class="animals-grid">
+      <div class="animal-card" *ngFor="let animal of animals; trackBy: trackByAnimalId">
+        <div class="card-glow"></div>
+        <div class="animal-image">
+          <img [src]="getRandomAnimalImage(animal)" [alt]="animal.name" class="animal-img">
+          <div class="image-overlay">
+            <div class="animal-type-icon">{{ getAnimalTypeIcon(animal.species) }}</div>
+          </div>
+        </div>
+        <div class="animal-info">
+          <h3 class="animal-name">{{ animal.name }}</h3>
+          <p class="animal-type">{{ animal.species }}</p>
+          <p class="animal-breed" *ngIf="animal.breed">{{ animal.breed }}</p>
+          <div class="animal-stats">
+            <span class="stat">
+              <span class="stat-icon">🏠</span>
+              {{ animal.environment }}
+            </span>
+          </div>
+        </div>
+        <div class="card-particles">
+          <div class="particle"></div>
+          <div class="particle"></div>
+          <div class="particle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading-section" *ngIf="loading">
+    <div class="loading-orb">
+      <div class="orb-ring"></div>
+      <div class="orb-ring"></div>
+      <div class="orb-ring"></div>
+    </div>
+    <p class="loading-text">Loading our furry friends...</p>
+  </div>
+
+  <div class="error-section" *ngIf="error">
+    <div class="error-icon">⚠️</div>
+    <h3 class="error-title">Oops! Something went wrong</h3>
+    <p class="error-message">{{ error }}</p>
+    <button class="retry-button" (click)="loadAnimals()">
+      <span class="button-icon">🔄</span>
+      Try Again
+    </button>
+  </div>
+</div>
