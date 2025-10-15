@@ -42,14 +42,62 @@
           <mat-label>Password</mat-label>
           <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required>
           <mat-icon matPrefix>lock</mat-icon>
-          <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+          <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
             <mat-icon>{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
           </button>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" type="submit" class="full-width register-button">
-          <mat-icon>person_add</mat-icon>
-          Register
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'" required>
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()">
+            <mat-icon>{{hideConfirmPassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <!-- Error messages -->
+        <div class="error-messages" *ngIf="errorMessage">
+          <mat-icon>error</mat-icon>
+          <span>{{errorMessage}}</span>
+        </div>
+
+        <!-- Form validation errors -->
+        <div class="form-errors" *ngIf="registerForm.invalid && registerForm.touched">
+          <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+            <mat-icon>error</mat-icon>
+            <span>{{getErrorMessage('firstName')}}</span>
+          </div>
+          <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+            <mat-icon>error</mat-icon>
+            <span>{{getErrorMessage('lastName')}}</span>
+          </div>
+          <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            <mat-icon>error</mat-icon>
+            <span>{{getErrorMessage('email')}}</span>
+          </div>
+          <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+            <mat-icon>error</mat-icon>
+            <span>{{getErrorMessage('phone')}}</span>
+          </div>
+          <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            <mat-icon>error</mat-icon>
+            <span>{{getErrorMessage('password')}}</span>
+          </div>
+          <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+            <mat-icon>error</mat-icon>
+            <span>{{getErrorMessage('confirmPassword')}}</span>
+          </div>
+          <div *ngIf="registerForm.hasError('passwordMismatch')">
+            <mat-icon>error</mat-icon>
+            <span>Passwords do not match</span>
+          </div>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" class="full-width register-button" [disabled]="isLoading">
+          <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+          <mat-icon *ngIf="!isLoading">person_add</mat-icon>
+          {{isLoading ? 'Registering...' : 'Register'}}
         </button>
 
         <div class="links">

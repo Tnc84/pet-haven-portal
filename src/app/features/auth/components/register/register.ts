@@ -42,6 +42,8 @@ export class Register {
     private authService: AuthService,
     private errorHandler: ErrorHandlerService
   ) {
+    // Test backend connectivity on component initialization
+    this.testBackendConnectivity();
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
@@ -64,7 +66,18 @@ export class Register {
   }
 
   onSubmit(): void {
+    console.log('=== REGISTRATION FORM SUBMISSION ===');
+    console.log('Form submission attempted');
+    console.log('Form valid:', this.registerForm.valid);
+    console.log('Form errors:', this.registerForm.errors);
+    console.log('Form value:', this.registerForm.value);
+    console.log('Is loading:', this.isLoading);
+    
+    // Mark all fields as touched to show validation errors
+    this.markFormGroupTouched(this.registerForm);
+    
     if (this.registerForm.valid && !this.isLoading) {
+      console.log('Form is valid, proceeding with registration...');
       this.isLoading = true;
       this.errorMessage = '';
 
@@ -75,19 +88,60 @@ export class Register {
         password: this.registerForm.value.password
       };
       
-      this.authService.register(registerRequest).subscribe({
-        next: (response) => {
-          this.isLoading = false;
-          this.errorHandler.showSuccess('Registration successful! You are now logged in.');
-          this.router.navigate(['/animals']);
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.errorHandler.handleAuthError(error);
-          this.errorMessage = error.error?.message || 'Registration failed. Please try again.';
-        }
-      });
+      console.log('Sending registration request:', registerRequest);
+      console.log('AuthService available:', !!this.authService);
+      console.log('ErrorHandler available:', !!this.errorHandler);
+      
+      try {
+        this.authService.register(registerRequest).subscribe({
+          next: (response) => {
+            console.log('Registration successful:', response);
+            this.isLoading = false;
+            this.errorHandler.showSuccess('Registration successful! You are now logged in.');
+            this.router.navigate(['/animals']);
+          },
+          error: (error) => {
+            console.error('Registration error details:', error);
+            console.error('Error status:', error.status);
+            console.error('Error message:', error.message);
+            console.error('Error error:', error.error);
+            this.isLoading = false;
+            this.errorHandler.handleAuthError(error);
+            this.errorMessage = this.errorHandler.getAuthErrorMessage(error);
+          }
+        });
+      } catch (error) {
+        console.error('Exception during registration:', error);
+        this.isLoading = false;
+        this.errorMessage = 'An unexpected error occurred. Please try again.';
+      }
+    } else {
+      console.log('Form is invalid, not submitting');
+      console.log('Form validation errors:', this.getFormValidationErrors());
+      this.errorMessage = 'Please fill in all required fields correctly.';
     }
+  }
+
+  private getFormValidationErrors(): any {
+    const errors: any = {};
+    Object.keys(this.registerForm.controls).forEach(key => {
+      const control = this.registerForm.get(key);
+      if (control && control.errors) {
+        errors[key] = control.errors;
+      }
+    });
+    return errors;
+  }
+
+  private markFormGroupTouched(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      control?.markAsTouched();
+      
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 
   togglePasswordVisibility(): void {
@@ -116,5 +170,24 @@ export class Register {
       return 'Passwords do not match';
     }
     return '';
+  }
+
+  private testBackendConnectivity(): void {
+    console.log('=== TESTING BACKEND CONNECTIVITY ===');
+    console.log('Environment API URL:', 'http://localhost:8765');
+    console.log('Registration endpoint:', 'http://localhost:8765/user-management/auth/register');
+    
+    // Simple fetch test
+    fetch('http://localhost:8765/user-management/auth/register', {
+      method: 'OPTIONS',
+      mode: 'cors'
+    })
+    .then(response => {
+      console.log('Backend connectivity test - OPTIONS response:', response.status);
+    })
+    .catch(error => {
+      console.error('Backend connectivity test failed:', error);
+      console.error('This might indicate CORS issues or backend is not running');
+    });
   }
 }

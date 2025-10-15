@@ -17,6 +17,14 @@
           <div class="error-message">
             <mat-icon>error</mat-icon>
             <span>{{ errorMessage }}</span>
+            @if (errorMessage === 'You must register first') {
+              <div class="error-action">
+                <a routerLink="/auth/register" class="register-link">
+                  <mat-icon>person_add</mat-icon>
+                  <span>Create Account</span>
+                </a>
+              </div>
+            }
           </div>
         }
 

@@ -67,7 +67,7 @@ export class Login {
         error: (error) => {
           this.isLoading = false;
           this.errorHandler.handleAuthError(error);
-          this.errorMessage = error.error?.message || 'Login failed. Please try again.';
+          this.errorMessage = this.errorHandler.getAuthErrorMessage(error);
         }
       });
     }

@@ -93,20 +93,40 @@ export class ErrorHandlerService {
   }
 
   /**
+   * Get user-friendly error message for authentication errors
+   */
+  getAuthErrorMessage(error: any): string {
+    if (error.error?.message) {
+      const backendMessage = error.error.message.toLowerCase();
+      
+      if (backendMessage.includes('error occurred while processing') || 
+          backendMessage.includes('an error occurred while processing')) {
+        return 'You must register first';
+      } else if (backendMessage.includes('user not found') || 
+                 backendMessage.includes('user does not exist')) {
+        return 'You must register first';
+      } else if (backendMessage.includes('invalid credentials') || 
+                 backendMessage.includes('bad credentials')) {
+        return 'Invalid email or password';
+      } else {
+        return error.error.message;
+      }
+    } else if (error.status === 401) {
+      return 'You must register first';
+    } else if (error.status === 403) {
+      return 'Account is locked or disabled.';
+    }
+    
+    return 'Authentication failed.';
+  }
+
+  /**
    * Handle authentication errors specifically
    */
   handleAuthError(error: any): void {
     console.error('Authentication error:', error);
     
-    let message = 'Authentication failed.';
-    
-    if (error.error?.message) {
-      message = error.error.message;
-    } else if (error.status === 401) {
-      message = 'Invalid credentials.';
-    } else if (error.status === 403) {
-      message = 'Account is locked or disabled.';
-    }
+    const message = this.getAuthErrorMessage(error);
 
     this.snackBar.open(message, 'Close', {
       duration: 5000,
