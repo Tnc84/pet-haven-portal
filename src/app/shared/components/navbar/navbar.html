@@ -1,5 +1,24 @@
 <mat-toolbar color="primary" class="navbar">
   <div class="navbar-container">
+    <!-- Logo/Brand -->
+    <div class="navbar-brand">
+      <a routerLink="/" class="brand-link">
+        <mat-icon class="brand-icon">pets</mat-icon>
+        <span class="brand-text">Pet Haven</span>
+      </a>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="navbar-nav" *ngIf="authService.isAuthenticated()">
+      <a mat-button routerLink="/" routerLinkActive="active" class="nav-button">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </a>
+      <a mat-button routerLink="/happy-tails" routerLinkActive="active" class="nav-button">
+        <mat-icon>favorite</mat-icon>
+        <span>Happy Tails</span>
+      </a>
+    </nav>
 
     <div class="navbar-actions">
       @if (authService.isAuthenticated()) {
