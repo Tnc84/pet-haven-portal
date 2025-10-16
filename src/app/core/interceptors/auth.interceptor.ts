@@ -14,12 +14,16 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Add access token to requests (except auth endpoints)
   if (!isAuthEndpoint(req.url)) {
     const token = authService.getAccessToken();
+    console.log('Auth interceptor - URL:', req.url, 'Token:', token ? 'Present' : 'Missing');
     if (token) {
       req = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
         }
       });
+      console.log('Authorization header added to request');
+    } else {
+      console.warn('No token available for authenticated request to:', req.url);
     }
   }
 

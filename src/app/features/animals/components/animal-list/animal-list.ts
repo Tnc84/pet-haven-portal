@@ -37,8 +37,10 @@ export class AnimalList implements OnInit {
   }
 
   loadAnimals(): void {
+    console.log('Loading animals...');
     this.animalService.getAllAnimals().subscribe({
       next: (animals) => {
+        console.log('Animals loaded successfully:', animals);
         this.animals = animals;
         this.snackBar.open('Animals loaded successfully', 'Close', {
           duration: 3000,
@@ -48,6 +50,12 @@ export class AnimalList implements OnInit {
       },
       error: (error) => {
         console.error('Error loading animals:', error);
+        this.snackBar.open('Failed to load animals. Please try again.', 'Close', {
+          duration: 5000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar']
+        });
       }
     });
   }

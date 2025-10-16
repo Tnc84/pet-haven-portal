@@ -11,6 +11,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService, LoginRequest } from '../../../../core/services/auth.service';
 import { ErrorHandlerService } from '../../../../core/services/error-handler.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -52,20 +53,30 @@ export class Login {
     if (this.loginForm.valid && !this.isLoading) {
       this.isLoading = true;
       this.errorMessage = '';
+      
+      // Disable form controls during loading
+      this.loginForm.disable();
 
       const loginRequest: LoginRequest = this.loginForm.value;
       
       this.authService.login(loginRequest).subscribe({
         next: (response) => {
           this.isLoading = false;
+          this.loginForm.enable(); // Re-enable form controls
           this.errorHandler.showSuccess('Login successful!');
           
-          // Redirect to return URL or default dashboard
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/animals';
-          this.router.navigate([returnUrl]);
+          // Wait for authentication state to be properly set before redirecting
+          this.authService.isAuthenticated$.pipe(take(1)).subscribe(isAuthenticated => {
+            if (isAuthenticated) {
+              // Redirect to return URL or default dashboard
+              const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/animals';
+              this.router.navigate([returnUrl]);
+            }
+          });
         },
         error: (error) => {
           this.isLoading = false;
+          this.loginForm.enable(); // Re-enable form controls
           this.errorHandler.handleAuthError(error);
           this.errorMessage = this.errorHandler.getAuthErrorMessage(error);
         }

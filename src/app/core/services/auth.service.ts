@@ -178,6 +178,7 @@ export class AuthService {
    * Set authentication data
    */
   private setAuthData(response: LoginResponse): void {
+    console.log('Setting auth data:', response);
     localStorage.setItem(this.TOKEN_KEY, response.token);
     localStorage.setItem(this.USER_KEY, JSON.stringify({
       userId: response.userId,
@@ -191,6 +192,7 @@ export class AuthService {
       email: response.email,
       role: response.role
     });
+    console.log('Auth state updated - isAuthenticated: true');
   }
 
   /**

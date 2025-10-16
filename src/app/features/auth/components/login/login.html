@@ -35,7 +35,6 @@
             formControlName="email" 
             type="email" 
             placeholder="your@email.com" 
-            [disabled]="isLoading"
             required>
           <mat-icon matPrefix>email</mat-icon>
           @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
@@ -49,15 +48,13 @@
             matInput 
             formControlName="password" 
             [type]="hidePassword ? 'password' : 'text'" 
-            [disabled]="isLoading"
             required>
           <mat-icon matPrefix>lock</mat-icon>
           <button 
             mat-icon-button 
             matSuffix 
             type="button" 
-            (click)="togglePasswordVisibility()"
-            [disabled]="isLoading">
+            (click)="togglePasswordVisibility()">
             <mat-icon>{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
           </button>
           @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
